@@ -1,0 +1,38 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "dockerfile"
+  },
+  "deploy": {
+    "startCommand": "python main.py",
+    "restartPolicyType": "always",
+    "restartPolicyMaxRetries": 5,
+    "healthchecks": {
+      "enabled": true,
+      "interval": 30,
+      "timeout": 10,
+      "startPeriod": 40,
+      "successThreshold": 1,
+      "failureThreshold": 3
+    },
+    "env": {
+      "PORT": "8000",
+      "ENVIRONMENT": "production",
+      "DEBUG": "False",
+      "LOG_LEVEL": "INFO"
+    }
+  },
+  "plugins": [
+    {
+      "source": "railway/nixpacks",
+      "config": {
+        "nixpacks": {
+          "providers": ["python"],
+          "python": {
+            "version": "3.11"
+          }
+        }
+      }
+    }
+  ]
+}
